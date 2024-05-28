@@ -19,31 +19,9 @@ const Login = () => {
 
     const [loginUserName, setLoginUserName] = useState('')
     const [loginPassword, setLoginPassword] = useState('')
-    const navigateTo = useNavigate()
-
     const [loginStatus, setLoginStatus] = useState('')
     const [statusHolder, setStatusHolder] = useState('message')
-
-
-    const loginUser = (e) => {
-
-        e.preventDefault()
-
-        Axios.post('http://localhost:3002/login', {
-            LoginUserName: loginUserName,
-            LoginPassword: loginPassword
-        }).then((response) => {
-            console.log(response.data.message)
-
-            if(response.data.message || loginUserName == '' || loginPassword == '') {
-                navigateTo('/')
-                setLoginStatus('Credenciais não existem!')
-            } else {
-                navigateTo('dashboard')
-            }
-
-        })
-    }
+    const navigateTo = useNavigate()
 
     useEffect(() => {
         if(loginStatus !== '') {
@@ -54,11 +32,30 @@ const Login = () => {
         }
     }, [loginStatus])
 
+    const loginUser = async (e) => {
+        e.preventDefault()
 
-    const onSubmit = () => {
-        setLoginUserName('')
-        setLoginPassword('')
+        try {
+            const response = await Axios.post('http://localhost:3002/', {
+                username: loginUserName,
+                password: loginPassword
+            })
+
+            if (response.status === 200) {
+                setLoginStatus('Login realizado com sucesso!')
+                localStorage.setItem('token', response.data.token)
+                navigateTo('dashboard')
+            }
+
+        } catch (err) {
+            if (err.response) {
+                setLoginStatus(err.response.data.msg)
+            } else {
+                console.error('Erro: ', err)
+            }
+        }
     }
+
 
     return (
         <div className='loginPage flex'>
@@ -68,7 +65,7 @@ const Login = () => {
                     <img id='imgLogin' src={imgLogin} alt="" />
 
                     <div className="textDiv">
-                        <h2 className='title'>Programa de gerenciamento financeiro da Voxlink</h2>
+                        <h2 className='title'>Programa de Gerenciamento Financeiro - Voxlink</h2>
                         <p>Sua parceira em soluções de TI!</p>
                     </div>
 
@@ -86,7 +83,7 @@ const Login = () => {
                         <h3>Bem-vindo de volta!</h3>
                     </div>
 
-                    <form className='form grid' onSubmit = {onSubmit}>
+                    <form className='form grid' onSubmit = {loginUser}>
                         <span className={statusHolder}>{loginStatus}</span>
                         <div className="inputDiv">
                             <label htmlFor="username">Usuário</label>
@@ -115,9 +112,9 @@ const Login = () => {
                             <AiOutlineSwapRight className='icon' />
                         </button>
 
-                        <span className='forgotPassword'>
+                        {/* <span className='forgotPassword'>
                             Esqueceu a senha? <a href="">Clique aqui</a>
-                        </span>
+                        </span> */}
 
                     </form>
                 </div>
