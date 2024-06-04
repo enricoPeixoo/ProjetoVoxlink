@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './Register.css'
 import '../../App.css'
 import { Link, useNavigate } from 'react-router-dom'
@@ -19,29 +19,47 @@ import { FaUserShield } from "react-icons/fa"
 const Register = () => {
 
     const [email, setEmail] = useState('')
-    const [userName, setUserName] = useState('')
+    const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [registerStatus, setRegisterStatus] = useState('')
+    const [statusHolder, setStatusHolder] = useState('message')
     const navigateTo = useNavigate()
 
-
-    const createUser = (e) => {
+    useEffect(() => {
+        if (registerStatus !== '') {
+            setStatusHolder('showMessage')
+            setTimeout(() => {
+                setStatusHolder('message')
+            }, 4000)
+        }
+    }, [registerStatus])
+      
+    const createUser = async (e) => {
 
         e.preventDefault()
-        
-        Axios.post('http://localhost:3002/register', {
-            Email: email,
-            UserName: userName,
-            Password: password
-        }).then(() => {
-            console.log('Usuário foi criado!')
 
-            navigateTo('/')
+        try {
+            const response = await Axios.post('http://localhost:3002/register', {
+                username,
+                email,
+                password,
+                confirmPassword
+            })
 
-            setEmail('')
-            setUserName('')
-            setPassword('')
-        })
-    }
+            if (response.status === 201) {
+                console.log('Usuário criado')
+                navigateTo('/')
+
+            }
+        } catch (err) {
+            if (err.response) {
+                setRegisterStatus(err.response.data.msg)
+            } else {
+                console.error('Erro:', err)
+            }
+        }
+    } 
 
 
     return (
@@ -52,7 +70,7 @@ const Register = () => {
                     <img id='imgLogin' src={imgLogin} alt="" />
 
                     <div className="textDiv">
-                        <h2 className='title'>Programa de gerenciamento financeiro da Voxlink</h2>
+                        <h2 className='title'>Programa de Gerenciamento Financeiro - Voxlink</h2>
                         <p>Sua parceira em soluções de TI!</p>
                     </div>
 
@@ -70,8 +88,8 @@ const Register = () => {
                         <h3>Cadastre-se aqui!</h3>
                     </div>
 
-                    <form action="" className='form grid'>
-
+                    <form action="" className='form grid' onSubmit = {createUser}>  
+                    <span className={statusHolder}>{registerStatus}</span>                    
                         <div className="inputDiv">
                             <label htmlFor="email">Email</label>
                             <div className="input flex">
@@ -89,7 +107,7 @@ const Register = () => {
                             <FaUserShield className='icon'/>
                             <input type="text" id='username' placeholder='Insira o seu usuário' 
                             onChange={(event) => {
-                                setUserName(event.target.value)
+                                setUsername(event.target.value)
                             }}/>
                             </div>
                         </div>
@@ -105,14 +123,25 @@ const Register = () => {
                             </div>
                         </div>
 
-                        <button type='submit' className='btn flex' onClick = {createUser}>
+                        <div className="inputDiv">
+                            <label htmlFor="password">Confirme a senha</label>
+                            <div className="input flex">
+                            <BsFillShieldLockFill className='icon'/>
+                            <input type="password" id='confirmPassword' placeholder='Insira a senha novamente' 
+                            onChange={(event) => {
+                                setConfirmPassword(event.target.value)
+                            }}/>
+                            </div>
+                        </div>
+
+                        <button type='submit' className='btn flex'>
                             <span>Cadastrar</span>
                             <AiOutlineSwapRight className='icon' />
                         </button>
 
-                        <span className='forgotPassword'>
+                        {/* <span className='forgotPassword'>
                             Esqueceu a senha? <a href="">Clique aqui</a>
-                        </span>
+                        </span> */}
 
                     </form>
                 </div>
