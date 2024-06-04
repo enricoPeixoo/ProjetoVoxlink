@@ -107,7 +107,7 @@ const Login = () => {
                             </div>
                         </div>
 
-                        <button type='submit' className='btn flex' onClick={loginUser}>
+                        <button type='submit' className='btn flex'>
                             <span>Login </span>
                             <AiOutlineSwapRight className='icon' />
                         </button>

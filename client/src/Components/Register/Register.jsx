@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './Register.css'
 import '../../App.css'
 import { Link, useNavigate } from 'react-router-dom'
@@ -22,9 +22,19 @@ const Register = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+    const [registerStatus, setRegisterStatus] = useState('')
+    const [statusHolder, setStatusHolder] = useState('message')
     const navigateTo = useNavigate()
 
-
+    useEffect(() => {
+        if (registerStatus !== '') {
+            setStatusHolder('showMessage')
+            setTimeout(() => {
+                setStatusHolder('message')
+            }, 4000)
+        }
+    }, [registerStatus])
+      
     const createUser = async (e) => {
 
         e.preventDefault()
@@ -40,10 +50,11 @@ const Register = () => {
             if (response.status === 201) {
                 console.log('Usuário criado')
                 navigateTo('/')
+
             }
         } catch (err) {
             if (err.response) {
-                console.log(err.response.data.msg)
+                setRegisterStatus(err.response.data.msg)
             } else {
                 console.error('Erro:', err)
             }
@@ -77,8 +88,8 @@ const Register = () => {
                         <h3>Cadastre-se aqui!</h3>
                     </div>
 
-                    <form action="" className='form grid'>
-
+                    <form action="" className='form grid' onSubmit = {createUser}>  
+                    <span className={statusHolder}>{registerStatus}</span>                    
                         <div className="inputDiv">
                             <label htmlFor="email">Email</label>
                             <div className="input flex">
@@ -123,7 +134,7 @@ const Register = () => {
                             </div>
                         </div>
 
-                        <button type='submit' className='btn flex' onClick = {createUser}>
+                        <button type='submit' className='btn flex'>
                             <span>Cadastrar</span>
                             <AiOutlineSwapRight className='icon' />
                         </button>

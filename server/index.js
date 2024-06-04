@@ -44,7 +44,6 @@ function checkToken(req, res, next) {
         const secret = process.env.SECRET
 
         jwt.verify(token, secret)
-
         next()
     } catch (err) {
         res.status(400).json({msg: "Token Inválido"})
@@ -115,13 +114,13 @@ app.post("/", async (req, res) => {
     const user = await User.findOne({ username: username })
 
     if(!user) {
-        return res.status(404).json({msg: 'Usuário não encontrado!'})
+        return res.status(404).json({msg: 'Usuário ou senha incorretos!'})
     }
 
     const checkPassword = await bcrypt.compare(password, user.password)
 
     if (!checkPassword) {
-        return res.status(422).json({msg: 'Senha inválida!'})
+        return res.status(422).json({msg: 'Usuário ou senha incorretos!'})
     }
 
     try {
