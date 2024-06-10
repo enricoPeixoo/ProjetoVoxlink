@@ -1,59 +1,89 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './Dashboard.css'
 import '../../App.css'
+import {useNavigate, Link} from 'react-router-dom'
 
 const Dashboard = () => {
-    return (
-        <>
-        <main className='dashboardPage'>
-    <div className="resume">
-      <div>
-        Entradas: R$
-        <span className="incomes">0.00</span>
-      </div>
-      <div>
-        Saídas: R$
-        <span className="expenses">0.00</span>
-      </div>
-      <div>
-        Total: R$
-        <span className="total">0.00</span>
-      </div>
-    </div>
-    <div className="newItem">
-      <div className="divDesc">
-        <label for="desc">Descrição</label>
-        <input type="text" id="desc" />
-      </div>
-      <div className="divAmount">
-        <label for="amount">Valor</label>
-        <input type="number" id="amount" />
-      </div>
-      <div className="divType">
-        <label for="type">Tipo</label>
-        <select id="type">
-          <option>Entrada</option>
-          <option>Saída</option>
-        </select>
-      </div>
-      <button id="btnNew">Incluir</button>
-    </div>
-    <div className="divTable"></div>
-      <table>
-        <thead>
-          <tr>
-            <th>Descrição</th>
-            <th className="columnAmount">Valor</th>
-            <th className="columnType">Tipo</th>
-            <th className="columnAction"></th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-  </main> 
-        </>
+    const [showModal, setShowModal] = useState(false);
 
+    const handleAddActionClick = () => {
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
+
+    const navigateTo = useNavigate()
+
+    return (
+      <>
+            <div className='dashboardHeader'>
+                <Link to ={'/'}>
+                    <button id='logoutBtn'>Log Out</button>
+                </Link>               
+            </div>
+          <div className="dashboardPage">
+        <h1>Sistema Financeiro</h1>
+        <button onClick={handleAddActionClick}>Adicionar nova ação</button>
+        <h2>Registros</h2>
+        <table id="records-table">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Nome</th>
+                    <th>Tipo</th>
+                    <th>Orçado</th>
+                    <th>Realizado</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {/* Registros serão adicionados aqui */}
+            </tbody>
+        </table>
+        <div id="summary">
+            <h2>Resumo do Mês</h2>
+            <p>Caixa Orçado: <span id="budgeted-total"></span></p>
+            <p>Caixa Realizado: <span id="realized-total"></span></p>
+        </div>
+
+        {showModal && (
+          <div className="modal">
+            <div className="modal-content">
+              <span className="close-button" onClick={handleCloseModal}>&times;</span>
+              <h2>Nova Ação</h2>
+              <form className='formModal'>
+                <div className='formInputsModal'>
+                  <label>Data da Ação:</label>
+                  <input type="date" name="date" required />
+                </div>
+                <div className='formInputsModal'>
+                  <label>Nome:</label>
+                  <input type="text" name="name" required />
+                </div>
+                <div className='formInputsModal'>
+                  <label>Tipo:</label>
+                  <select name="type" required>
+                    <option value="entrada">Entrada</option>
+                    <option value="saida">Saída</option>
+                  </select>
+                </div>
+                <div className='formInputsModal'>
+                  <label>Orçado:</label>
+                  <input type="number" name="budgeted" required />
+                </div>
+                <div className='formInputsModal'>
+                  <label>Realizado:</label>
+                  <input type="number" name="realized" required />
+                </div>
+                <button type="submit">Adicionar</button>
+              </form>
+            </div>
+          </div>
+        )}
+    </div>
+      </>
     )
 }
 
