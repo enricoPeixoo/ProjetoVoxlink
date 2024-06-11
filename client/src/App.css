@@ -335,6 +335,15 @@ img {
   cursor: pointer;
 }
 
+.dashboardHeader #logoutBtn {
+  padding: 5px;
+  background-color: var(--primaryColor);
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
 .dashboardPage {
   max-width: 800px;
   margin: 20px auto;
@@ -344,18 +353,6 @@ img {
 }
 .dashboardPage h1, .dashboardPage h2 {
   text-align: center;
-}
-.dashboardPage .form-group {
-  margin-bottom: 15px;
-}
-.dashboardPage .form-group label {
-  display: block;
-  margin-bottom: 5px;
-}
-.dashboardPage .form-group input, .dashboardPage .form-group select {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
 }
 .dashboardPage button {
   display: block;
@@ -401,11 +398,8 @@ img {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
-.dashboardPage .formInputsModal {
-  padding: 2px;
-}
 .dashboardPage .modal-content {
-  background-color: white;
+  background-color: var(--bgColor);
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
@@ -424,4 +418,32 @@ img {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+.dashboardPage .formModal {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.dashboardPage .formInputsModal {
+  padding: 0.8rem;
+  background: var(--inputColor);
+  border-radius: 5px;
+  outline: none;
+  border: none;
+}
+.dashboardPage .formInputsModal label {
+  color: var(--blackColor);
+  font-weight: 400;
+  font-size: 14px;
+  padding: 0.5rem 0;
+  display: block;
+}
+.dashboardPage .formInputsModal input {
+  background: none;
+  outline: none;
+  border: none;
+  width: 200px;
+}
+.dashboardPage .formInputsModal #input-date {
+  width: 120px;
 }/*# sourceMappingURL=App.css.map */

@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import './Dashboard.css'
 import '../../App.css'
-import {useNavigate, Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 const Dashboard = () => {
     const [showModal, setShowModal] = useState(false);
@@ -14,7 +14,7 @@ const Dashboard = () => {
         setShowModal(false);
     };
 
-    const navigateTo = useNavigate()
+    
 
     return (
       <>
@@ -56,11 +56,11 @@ const Dashboard = () => {
               <form className='formModal'>
                 <div className='formInputsModal'>
                   <label>Data da Ação:</label>
-                  <input type="date" name="date" required />
+                  <input type="date" name="date" id='input-date' placeholder='Insira a data' required />
                 </div>
                 <div className='formInputsModal'>
                   <label>Nome:</label>
-                  <input type="text" name="name" required />
+                  <input type="text" name="name" placeholder='Insira o nome' required />
                 </div>
                 <div className='formInputsModal'>
                   <label>Tipo:</label>
@@ -70,12 +70,12 @@ const Dashboard = () => {
                   </select>
                 </div>
                 <div className='formInputsModal'>
-                  <label>Orçado:</label>
-                  <input type="number" name="budgeted" required />
+                  <label>Orçado (R$):</label>
+                  <input type="number" name="budgeted" placeholder='Insira o valor orçado' required />
                 </div>
                 <div className='formInputsModal'>
-                  <label>Realizado:</label>
-                  <input type="number" name="realized" required />
+                  <label>Realizado (R$):</label>
+                  <input type="number" name="realized" placeholder='Insira o valor final' required />
                 </div>
                 <button type="submit">Adicionar</button>
               </form>
