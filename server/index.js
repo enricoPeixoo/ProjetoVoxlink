@@ -13,6 +13,9 @@ app.use(cors())
 const userRoutes = require('./routes/userRoutes')
 app.use('/api', userRoutes)
 
+const financeRoutes = require ('./routes/financesRoutes')
+app.use('/apiF', financeRoutes)
+
 //Rodar servidor
 app.listen(3002, () => {
     console.log('Server está rodando na porta 3002')

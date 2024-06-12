@@ -104,9 +104,16 @@ const checkToken = (req, res, next) => {
     }
 }
 
+const getUsers = (req, res) => {
+    User.find()
+    .then(user => res.json(user))
+    .catch(err => res.json(err))
+}
+
 module.exports = {
     registerUser,
     loginUser,
     getUserById,
-    checkToken
+    checkToken,
+    getUsers
 }

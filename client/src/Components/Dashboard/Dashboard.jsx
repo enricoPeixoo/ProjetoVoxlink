@@ -1,9 +1,26 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import './Dashboard.css'
 import '../../App.css'
-import {Link} from 'react-router-dom'
+import {Link, useParams} from 'react-router-dom'
+import axios from 'axios'
 
 const Dashboard = () => {
+
+    const { id } = useParams()
+
+    const [data, setData] = useState ([])
+
+    useEffect (() => {
+      axios.get('http://localhost:3002/apiF/finances')
+        .then(res => {
+          console.log(res)
+          setData(res.data)
+        })
+        .catch (err => console.log(err))
+    }, [])
+
+
+
     const [showModal, setShowModal] = useState(false);
 
     const handleAddActionClick = () => {
@@ -39,14 +56,23 @@ const Dashboard = () => {
                 </tr>
             </thead>
             <tbody>
-                {/* Registros serão adicionados aqui */}
+                {
+                  data.map((finance, index) => {
+                    return <tr key={index}>
+                      <td>{finance.date}</td>
+                      <td>{finance.name}</td>
+                      <td>{finance.type}</td>
+                      <td>{finance.budgeted}</td>
+                      <td>{finance.realized}</td>
+                      <td>
+                        <Link to={'/updateFinance/{finance._id}'} className='btn-edit'>Editar</Link>
+                        <button className='btn-delete'>Deletar</button>
+                      </td>           
+                    </tr>
+                  })
+                }
             </tbody>
         </table>
-        <div id="summary">
-            <h2>Resumo do Mês</h2>
-            <p>Caixa Orçado: <span id="budgeted-total"></span></p>
-            <p>Caixa Realizado: <span id="realized-total"></span></p>
-        </div>
 
         {showModal && (
           <div className="modal">
@@ -56,26 +82,26 @@ const Dashboard = () => {
               <form className='formModal'>
                 <div className='formInputsModal'>
                   <label>Data da Ação:</label>
-                  <input type="date" name="date" id='input-date' placeholder='Insira a data' required />
+                  <input type="date" id='input-date' placeholder='Insira a data' required />
                 </div>
                 <div className='formInputsModal'>
-                  <label>Nome:</label>
-                  <input type="text" name="name" placeholder='Insira o nome' required />
+                  <label>Nome / Descrição:</label>
+                  <input type="text" id="name" placeholder='Insira o nome / descrição' required />
                 </div>
                 <div className='formInputsModal'>
                   <label>Tipo:</label>
-                  <select name="type" required>
+                  <select id="type" required>
                     <option value="entrada">Entrada</option>
                     <option value="saida">Saída</option>
                   </select>
                 </div>
                 <div className='formInputsModal'>
                   <label>Orçado (R$):</label>
-                  <input type="number" name="budgeted" placeholder='Insira o valor orçado' required />
+                  <input type="number" id="budgeted" placeholder='Insira o valor orçado' required />
                 </div>
                 <div className='formInputsModal'>
                   <label>Realizado (R$):</label>
-                  <input type="number" name="realized" placeholder='Insira o valor final' required />
+                  <input type="number" id="realized" placeholder='Insira o valor final' required />
                 </div>
                 <button type="submit">Adicionar</button>
               </form>
