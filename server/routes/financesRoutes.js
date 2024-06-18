@@ -5,6 +5,7 @@ const financeController = require('../controllers/financeController')
 
 //Listar as ações criadas
 router.get('/finances', financeController.listFinances)
+router.get('/finance/:id', financeController.listFinanceById)
 
 //Criar ação Financeira
 router.post('/createFinance', financeController.createFinance)

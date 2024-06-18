@@ -7,21 +7,17 @@ const listFinances = async (req, res) => {
     .catch (err => res.json(err))
 }
 
+const listFinanceById = async (req, res) => {
+    const id = req.params.id
+    Finance.findById({ _id: id})
+    .then(post => res.json(post))
+    .catch(err => console.log(err))
+}
+
 const createFinance = async (req, res) => {
-    const finance = new Finance({
-        date: req.body.date,
-        name: req.body.name,
-        type: req.body.type,
-        budgeted: req.body.budgeted,
-        realized: req.body.realized,
-      });
-    
-      try {
-        const savedFinance = await finance.save();
-        res.json(savedFinance);
-      } catch (err) {
-        res.json({ message: err });
-      }
+    Finance.create(req.body)
+    .then (finance => res.json(finance))
+    .catch (err => res.json(err))
 }
 
 const updateFinance = async (req, res) => {
@@ -50,5 +46,6 @@ module.exports = {
     createFinance,
     updateFinance,
     deleteFinance,
-    listFinances
+    listFinances,
+    listFinanceById
 }
