@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import './Dashboard.css'
 import '../../App.css'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import axios from 'axios'
 
 const Dashboard = () => {
@@ -10,9 +10,11 @@ const Dashboard = () => {
     //use state para pegar os dados e imprimir na lista
     const [data, setData] = useState ([])
 
+    const navigate = useNavigate()
+
     const formatDate = (dateString) => {
       const date = new Date(dateString)
-      const day = String(date.getDate()).padStart(2, '0')
+      const day = String(date.getDate() + 1).padStart(2, '0')
       const month = String(date.getMonth() + 1).padStart(2, '0')
       const year = date.getFullYear()
       return `${day}/${month}/${year}`
@@ -32,6 +34,14 @@ const Dashboard = () => {
         })
         .catch (err => console.log(err))
     }, [])
+
+    const handleDelete = (id) => {
+      axios.delete('http://localhost:3002/apiF/deleteFinance/' + id)
+      .then(res => {
+        console.log(res)     
+      })
+      .catch (err => console.log(err))
+    }
 
     return (
       <>
@@ -70,7 +80,7 @@ const Dashboard = () => {
                         <Link to= {`/updateFinance/${finance._id}`}>
                         <button id='btn-edit'>Editar</button>
                         </Link>
-                        <button id='btn-delete'>Deletar</button>
+                        <button id='btn-delete' onClick={() => handleDelete(finance._id)}>Deletar</button>
                       </td>           
                     </tr>
                   })

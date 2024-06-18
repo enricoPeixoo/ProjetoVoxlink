@@ -78,7 +78,7 @@ const UpdateFinance = () => {
                                 <label>Realizado (R$):</label>
                                 <input type="number" id="realized" placeholder='Insira o valor final' required value={realized} onChange={(e) => setRealized(e.target.value)}/>
                             </div>
-                            <button type="submit">Adicionar</button>
+                            <button type="submit">Editar</button>
                         </form>
                     </div>
                 </div>
