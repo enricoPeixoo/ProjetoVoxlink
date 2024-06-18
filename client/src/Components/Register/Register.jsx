@@ -40,7 +40,7 @@ const Register = () => {
         e.preventDefault()
 
         try {
-            const response = await Axios.post('http://localhost:3002/register', {
+            const response = await Axios.post('http://localhost:3002/api/register', {
                 username,
                 email,
                 password,
