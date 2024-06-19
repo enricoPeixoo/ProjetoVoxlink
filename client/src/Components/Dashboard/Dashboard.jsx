@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import './Dashboard.css'
 import '../../App.css'
-import {Link, useNavigate} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import axios from 'axios'
 
 const Dashboard = () => {
@@ -10,7 +10,6 @@ const Dashboard = () => {
     //use state para pegar os dados e imprimir na lista
     const [data, setData] = useState ([])
 
-    const navigate = useNavigate()
 
     const formatDate = (dateString) => {
       const date = new Date(dateString)
@@ -20,6 +19,11 @@ const Dashboard = () => {
       return `${day}/${month}/${year}`
     }
 
+    const formatCurrency = (amount) => {
+      return `R$ ${parseFloat(amount).toFixed(2).replace('.', ',')}`;
+  };
+
+
     //Efeito para listar os dados na tabela
     useEffect (() => {
       axios.get('http://localhost:3002/apiF/finances')
@@ -28,7 +32,9 @@ const Dashboard = () => {
 
           const formattedDate = res.data.map(item => ({
             ...item,
-            date: formatDate(item.date)
+            date: formatDate(item.date),
+            budgeted: formatCurrency(item.budgeted),
+            realized: item.realized ? formatCurrency(item.realized) : undefined
           }))
           setData(formattedDate)
         })
@@ -36,11 +42,15 @@ const Dashboard = () => {
     }, [])
 
     const handleDelete = (id) => {
-      axios.delete('http://localhost:3002/apiF/deleteFinance/' + id)
-      .then(res => {
-        console.log(res)     
-      })
-      .catch (err => console.log(err))
+      const confirmDelete = window.confirm('Você tem certeza que deseja deletar essa ação?')
+
+      if (confirmDelete) {
+        axios.delete('http://localhost:3002/apiF/deleteFinance/' + id)
+        .then(() => {
+          setData(prevData => prevData.filter(finance => finance._id !== id))
+        })
+        .catch (err => console.log(err))
+      }
     }
 
     return (
@@ -75,7 +85,7 @@ const Dashboard = () => {
                       <td>{finance.name}</td>
                       <td>{finance.type}</td>
                       <td>{finance.budgeted}</td>
-                      <td>{finance.realized}</td>
+                      <td>{finance.realized ? finance.realized : '(Pendente)'}</td>
                       <td id='td-actions'>
                         <Link to= {`/updateFinance/${finance._id}`}>
                         <button id='btn-edit'>Editar</button>

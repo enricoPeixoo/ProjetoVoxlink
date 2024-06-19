@@ -326,15 +326,40 @@ img {
     width: 85%;
   }
 }
-.dashboardHeader #logoutBtn {
-  padding: 5px;
-  background-color: var(--primaryColor);
-  color: #fff;
-  border: none;
-  border-radius: 2px;
-  cursor: pointer;
+@media screen and (max-height: 769px) {
+  .loginPage .container .imgDiv .textDiv .title, .registerPage .container .imgDiv .textDiv .title {
+    font-size: 18px;
+  }
+  .loginPage .container .imgDiv .textDiv p, .registerPage .container .imgDiv .textDiv p {
+    padding: 0.8rem;
+  }
+  .loginPage .container .imgDiv .footerDiv .text, .registerPage .container .imgDiv .footerDiv .text {
+    font-size: 10px;
+  }
+  .loginPage .container .imgDiv .footerDiv .btn, .registerPage .container .imgDiv .footerDiv .btn {
+    padding: 0.3rem 1rem;
+  }
+  .loginPage .container .formDiv, .registerPage .container .formDiv {
+    gap: 0.8rem;
+    transform: translateY(-0.4rem);
+  }
+  .loginPage .container .formDiv .headerDiv, .registerPage .container .formDiv .headerDiv {
+    padding: 0.8rem 0;
+  }
+  .loginPage .container .formDiv .headerDiv #imgLogo, .registerPage .container .formDiv .headerDiv #imgLogo {
+    width: 120px;
+  }
+  .loginPage .container .formDiv .headerDiv h3, .registerPage .container .formDiv .headerDiv h3 {
+    font-size: 18px;
+  }
+  .loginPage .container .formDiv .form, .registerPage .container .formDiv .form {
+    gap: 0.4rem;
+  }
+  .loginPage .container .formDiv .form .inputDiv input, .registerPage .container .formDiv .form .inputDiv input {
+    width: 100%;
+    max-width: 180px;
+  }
 }
-
 .dashboardHeader #logoutBtn {
   padding: 5px;
   background-color: var(--primaryColor);
@@ -345,7 +370,7 @@ img {
 }
 
 .dashboardPage {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 20px auto;
   padding: 20px;
   background-color: #fff;
@@ -375,6 +400,7 @@ img {
 }
 .dashboardPage #btn-delete {
   background-color: rgb(189, 72, 4);
+  width: auto;
 }
 .dashboardPage #btn-delete:hover {
   background-color: rgb(238, 126, 61);
@@ -389,11 +415,13 @@ img {
 }
 .dashboardPage th, .dashboardPage td {
   padding: 10px;
-  text-align: left;
+  text-align: center;
+  white-space: nowrap;
 }
 .dashboardPage #td-actions {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   gap: 5px;
 }
 .dashboardPage #summary {

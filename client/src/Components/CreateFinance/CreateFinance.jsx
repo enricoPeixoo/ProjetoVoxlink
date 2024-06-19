@@ -16,12 +16,19 @@ const CreateFinance = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+      if (type === undefined) {
+        alert('Escolha se a ação será uma entrada ou saída!')
+      } else {
+        // console.log(date, name, type, budgeted, realized)
         axios.post('http://localhost:3002/apiF/createFinance', {date, name, type, budgeted, realized})
         .then(res => {
             console.log(res)
             navigate('/dashboard')
         })
         .catch(err => console.log(err))
+      }
+
+
     }
 
     return (
@@ -42,17 +49,18 @@ const CreateFinance = () => {
                 <div className='formInputsModal'>
                   <label>Tipo:</label>
                   <select id="type" required onChange={(e) => {setType(e.target.value)}}>
+                    <option>Escolha: Entrada / Saida</option>
                     <option value="entrada">Entrada</option>
                     <option value="saida">Saída</option>
                   </select>
                 </div>
                 <div className='formInputsModal'>
                   <label>Orçado (R$):</label>
-                  <input type="number" id="budgeted" placeholder='Insira o valor orçado' required onChange={(e) => {setBudgeted(e.target.value)}}/>
+                  <input type="number" id="budgeted" placeholder='Insira o valor orçado' step="0.01" required onChange={(e) => {setBudgeted(e.target.value)}}/>
                 </div>
                 <div className='formInputsModal'>
                   <label>Realizado (R$):</label>
-                  <input type="number" id="realized" placeholder='Insira o valor final' required onChange={(e) => {setRealized(e.target.value)}}/>
+                  <input type="number" id="realized" placeholder='Insira o valor final' step="0.01" onChange={(e) => {setRealized(e.target.value)}}/>
                 </div>
                 <button type="submit">Adicionar</button>
               </form>
