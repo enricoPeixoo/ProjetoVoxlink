@@ -123,11 +123,52 @@ const deleteFinance = async (req, res) => {
     .catch (err => res.json(err))
 }
 
+const listFinancesByMonth = async (req, res) => {
+    const { month, year } = req.query;
+
+    const startDate = new Date(year, month - 1, 1); // Month is zero-based
+    const endDate = new Date(year, month, 0);
+
+    try {
+        const finances = await Finance.find({
+            date: { $gte: startDate, $lte: endDate }
+        });
+
+        let totalBudgeted = 0;
+        let totalRealized = 0;
+
+        finances.forEach(finance => {
+            if (finance.type === 'entrada') {
+                totalBudgeted += finance.budgeted;
+                totalRealized += finance.realized ? finance.realized : 0;
+            } else if (finance.type === 'saida') {
+                totalBudgeted -= finance.budgeted;
+                totalRealized -= finance.realized ? finance.realized : 0;
+            }
+        });
+
+        const result = finances.map(finance => ({
+            ...finance.toObject(),
+            budgeted: toReais(finance.budgeted),
+            realized: finance.realized ? toReais(finance.realized) : undefined,
+        }));
+
+        res.json({
+            finances: result,
+            totalBudgeted: toReais(totalBudgeted),
+            totalRealized: toReais(totalRealized)
+        });
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
 
 module.exports = {
     createFinance,
     updateFinance,
     deleteFinance,
     listFinances,
-    listFinanceById
+    listFinanceById,
+    listFinancesByMonth
 }

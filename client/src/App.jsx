@@ -6,6 +6,7 @@ import Register from './Components/Register/Register';
 import Dashboard from './Components/Dashboard/Dashboard';
 import CreateFinance from './Components/CreateFinance/CreateFinance';
 import UpdateFinance from './Components/UpdateFinance/UpdateFinance';
+import MonthlyReport from './Components/MonthlyReport/MonthlyReport'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />}/>
         <Route path="/createFinance" element={<CreateFinance/>}/>
         <Route path="/updateFinance/:id" element={<UpdateFinance/>}/>
+        <Route path="/monthlyReport" element={<MonthlyReport/>}/>
       </Routes>
     </Router>
   );

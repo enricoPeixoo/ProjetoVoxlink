@@ -134,7 +134,7 @@ const Register = () => {
                             </div>
                         </div>
 
-                        <button type='submit' className='btn flex'>
+                        <button type='submit' className='btn flex' id='btn-submit'>
                             <span>Cadastrar</span>
                             <AiOutlineSwapRight className='icon' />
                         </button>
