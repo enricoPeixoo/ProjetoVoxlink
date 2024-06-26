@@ -63,7 +63,7 @@ const Dashboard = () => {
             realized: item.realized ? formatCurrency(item.realized) : undefined
           }));
           setData(formattedData);
-          calculateValues(res.data);  // Calculate values based on the data
+          calculateValues(res.data);  
         })
         .catch(err => console.log(err));
     }, []);
@@ -75,7 +75,7 @@ const Dashboard = () => {
         axios.delete('http://localhost:3002/apiF/deleteFinance/' + id)
         .then(() => {
           setData(prevData => prevData.filter(finance => finance._id !== id));
-          calculateValues(data.filter(finance => finance._id !== id));  // Recalculate values after deletion
+          calculateValues(data.filter(finance => finance._id !== id));  
         })
         .catch(err => console.log(err));
       }
@@ -156,9 +156,22 @@ const Dashboard = () => {
               </tr>
             </tbody>
           </table>
+          <br />
+          <div className="btns-report">
           <Link to='/monthlyReport'>
                 <button>Ver Relatórios Mensais</button>
           </Link>
+          <Link to='/quarterlyReport'>
+                <button>Ver Relatórios Trimestrais</button>
+          </Link>
+          <Link to='/semesterReport'>
+                <button>Ver Relatórios Semestrais</button>
+          </Link>
+          <Link to='/annualReport'>
+                <button>Ver Relatórios Anuais</button>
+          </Link>
+          </div>
+
         </div>
       </>
     );

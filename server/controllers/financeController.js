@@ -163,6 +163,148 @@ const listFinancesByMonth = async (req, res) => {
     }
 };
 
+const listFinancesByQuarter = async (req, res) => {
+    const { quarter, year } = req.query;
+
+    if (!quarter || !year) {
+        return res.status(400).send('Quarter and year are required');
+    }
+
+    const startMonth = (quarter - 1) * 3;
+    const startDate = new Date(year, startMonth, 1);
+    const endDate = new Date(year, startMonth + 3, 1);
+
+    try {
+        const finances = await Finance.find({
+            date: { $gte: startDate, $lt: endDate }
+        });
+
+        let totalBudgeted = 0;
+        let totalRealized = 0;
+
+        finances.forEach(finance => {
+            const budgeted = parseFloat(finance.budgeted);
+            const realized = finance.realized ? parseFloat(finance.realized) : 0;
+
+            if (finance.type === 'entrada') {
+                totalBudgeted += budgeted;
+                totalRealized += realized;
+            } else if (finance.type === 'saida') {
+                totalBudgeted -= budgeted;
+                totalRealized -= realized;
+            }
+        });
+
+        const result = finances.map(finance => ({
+            ...finance.toObject(),
+            budgeted: toReais(finance.budgeted),
+            realized: finance.realized ? toReais(finance.realized) : undefined,
+        }));
+
+        res.json({
+            finances: result,
+            totalBudgeted: toReais(totalBudgeted),  // Converte totalBudgeted de centavos para reais
+            totalRealized: toReais(totalRealized)   // Converte totalRealized de centavos para reais
+        });
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
+
+const listFinancesBySemester = async (req, res) => {
+    const { semester, year } = req.query;
+
+    if (!semester || !year) {
+        return res.status(400).send('Semester and year are required');
+    }
+
+    const startMonth = (semester - 1) * 6;
+    const startDate = new Date(year, startMonth, 1);
+    const endDate = new Date(year, startMonth + 6, 1);
+
+    try {
+        const finances = await Finance.find({
+            date: { $gte: startDate, $lt: endDate }
+        });
+
+        let totalBudgeted = 0;
+        let totalRealized = 0;
+
+        finances.forEach(finance => {
+            const budgeted = parseFloat(finance.budgeted);
+            const realized = finance.realized ? parseFloat(finance.realized) : 0;
+
+            if (finance.type === 'entrada') {
+                totalBudgeted += budgeted;
+                totalRealized += realized;
+            } else if (finance.type === 'saida') {
+                totalBudgeted -= budgeted;
+                totalRealized -= realized;
+            }
+        });
+
+        const result = finances.map(finance => ({
+            ...finance.toObject(),
+            budgeted: toReais(finance.budgeted),
+            realized: finance.realized ? toReais(finance.realized) : undefined,
+        }));
+
+        res.json({
+            finances: result,
+            totalBudgeted: toReais(totalBudgeted),  
+            totalRealized: toReais(totalRealized)   
+        });
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
+
+const listFinancesByYear = async (req, res) => {
+    const { year } = req.query;
+
+    if (!year) {
+        return res.status(400).send('Year is required');
+    }
+
+    const startDate = new Date(year, 0, 1);
+    const endDate = new Date(year, 11, 31);
+
+    try {
+        const finances = await Finance.find({
+            date: { $gte: startDate, $lt: endDate }
+        });
+
+        let totalBudgeted = 0;
+        let totalRealized = 0;
+
+        finances.forEach(finance => {
+            const budgeted = parseFloat(finance.budgeted);
+            const realized = finance.realized ? parseFloat(finance.realized) : 0;
+
+            if (finance.type === 'entrada') {
+                totalBudgeted += budgeted;
+                totalRealized += realized;
+            } else if (finance.type === 'saida') {
+                totalBudgeted -= budgeted;
+                totalRealized -= realized;
+            }
+        });
+
+        const result = finances.map(finance => ({
+            ...finance.toObject(),
+            budgeted: toReais(finance.budgeted),
+            realized: finance.realized ? toReais(finance.realized) : undefined,
+        }));
+
+        res.json({
+            finances: result,
+            totalBudgeted: toReais(totalBudgeted),  
+            totalRealized: toReais(totalRealized)   
+        });
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
 
 module.exports = {
     createFinance,
@@ -170,5 +312,8 @@ module.exports = {
     deleteFinance,
     listFinances,
     listFinanceById,
-    listFinancesByMonth
+    listFinancesByMonth,
+    listFinancesByQuarter,
+    listFinancesBySemester,
+    listFinancesByYear
 }

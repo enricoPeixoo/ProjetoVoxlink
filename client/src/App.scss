@@ -716,49 +716,57 @@ th, td {
       }
 }
 
-.MonthlyReportPage {
-    .monthly-report-container {
-        margin-top: 20px;
+.MonthlyReportPage, .QuarterlyReportPage, .SemesterReportPage, .AnnualReportPage {
+    .report-container {
         padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
         background-color: #f9f9f9;
-    }
-    
-    .monthly-report-container h2 {
-        text-align: center;
-        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: 0 auto;
     }
     
     .report-controls {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        flex-direction: column;
+        gap: 10px;
         margin-bottom: 20px;
     }
     
     .report-controls label {
-        margin-right: 10px;
+        font-weight: bold;
     }
     
     .report-controls select,
-    .report-controls input[type="number"],
-    .report-controls button {
+    .report-controls input {
         padding: 8px;
-        font-size: 14px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    
+    .report-controls button {
+        padding: 10px 20px;
+        background-color: var(--primaryColor);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    .report-controls button:hover {
+        background-color: var(--hoverColor);
     }
     
     .report-table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 20px;
     }
     
     .report-table th,
     .report-table td {
         border: 1px solid #ddd;
-        padding: 10px;
-        text-align: center;
+        padding: 8px;
+        text-align: left;
     }
     
     .report-table th {
@@ -766,17 +774,18 @@ th, td {
         font-weight: bold;
     }
     
-    .report-table tbody tr:nth-child(even) {
+    .report-table tr:nth-child(even) {
         background-color: #f9f9f9;
     }
     
-    .report-table tfoot td {
+    .total-row {
         font-weight: bold;
-        text-align: right;
+        background-color: #e0e0e0;
     }
-    
-    
+     
 }
+
+
 
 
 

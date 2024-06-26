@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './MonthlyReport.css'; 
-import '../../App.css';
+import React, { useState } from 'react';
 import {Link} from 'react-router-dom';
+import axios from 'axios'
+import './SemesterReport.css'
+import '../../App.css'
 
-const MonthlyReport = () => {
-    const [selectedMonth, setSelectedMonth] = useState('');
+const SemesterReport = () => {
+    const [selectedSemester, setSelectedSemester] = useState('');
     const [selectedYear, setSelectedYear] = useState('');
     const [reportData, setReportData] = useState([]);
     const [totalBudgeted, setTotalBudgeted] = useState(0);
     const [totalRealized, setTotalRealized] = useState(0);
 
     const fetchReportData = () => {
-        if (selectedMonth && selectedYear) {
-            axios.get(`http://localhost:3002/apiF/financesByMonth`, {
+        if (selectedSemester && selectedYear) {
+            axios.get('http://localhost:3002/apiF/financesBySemester', {
                 params: {
-                    month: selectedMonth,
+                    semester: selectedSemester,
                     year: selectedYear
                 }
             })
@@ -32,9 +32,9 @@ const MonthlyReport = () => {
 
     const formatCurrency = (amount) => {
         return `R$ ${parseFloat(amount).toFixed(2).replace('.', ',')}`;
-      };
+    };
 
-      const formatDate = (dateString) => {
+    const formatDate = (dateString) => {
         const date = new Date(dateString);
         const day = String(date.getDate() + 1).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -44,33 +44,23 @@ const MonthlyReport = () => {
 
     return (
         <>
-            <div className="MonthlyReportPage">
+            <div className="SemesterReportPage">
             <div className='reportHeader'>
                 <Link to='/dashboard'>
                     <button id='backBtn'>Voltar ao Dashboard</button>
                 </Link>
             </div>
                 <div className="report-container">
-                    <h2>Relatório Mensal</h2>
+                    <h2>Relatório Semestral</h2>
                     <div className="report-controls">
-                        <label>Mês:</label>
+                        <label>Semestre:</label>
                         <select
-                            value={selectedMonth}
-                            onChange={(e) => setSelectedMonth(e.target.value)}
+                            value={selectedSemester}
+                            onChange={(e) => setSelectedSemester(e.target.value)}
                         >
-                            <option value="">Selecione o mês</option>
-                            <option value="1">Janeiro</option>
-                            <option value="2">Fevereiro</option>
-                            <option value="3">Março</option>
-                            <option value="4">Abril</option>
-                            <option value="5">Maio</option>
-                            <option value="6">Junho</option>
-                            <option value="7">Julho</option>
-                            <option value="8">Agosto</option>
-                            <option value="9">Setembro</option>
-                            <option value="10">Outubro</option>
-                            <option value="11">Novembro</option>
-                            <option value="12">Dezembro</option>
+                            <option value="">Selecione o semestre</option>
+                            <option value="1">1º Semestre</option>
+                            <option value="2">2º Semestre</option>
                         </select>
                         <label htmlFor="year-select">Ano:</label>
                         <select id="year-select" value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
@@ -114,4 +104,4 @@ const MonthlyReport = () => {
     );
 };
 
-export default MonthlyReport;
+export default SemesterReport;

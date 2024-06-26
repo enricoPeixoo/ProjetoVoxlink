@@ -6,7 +6,10 @@ const financeController = require('../controllers/financeController')
 //Listar as ações criadas
 router.get('/finances', financeController.listFinances)
 router.get('/finance/:id', financeController.listFinanceById)
-router.get('/financesByMonth', financeController.listFinancesByMonth);
+router.get('/financesByMonth', financeController.listFinancesByMonth)
+router.get('/financesByQuarter', financeController.listFinancesByQuarter)
+router.get('/financesBySemester', financeController.listFinancesBySemester)
+router.get('/financesByYear', financeController.listFinancesByYear)
 
 //Criar ação Financeira
 router.post('/createFinance', financeController.createFinance)

@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
-import './MonthlyReport.css'; 
+import './QuarterlyReport.css'
 import '../../App.css';
 import {Link} from 'react-router-dom';
 
-const MonthlyReport = () => {
-    const [selectedMonth, setSelectedMonth] = useState('');
+const QuarterlyReport = () => {
+    const [selectedQuarter, setSelectedQuarter] = useState('');
     const [selectedYear, setSelectedYear] = useState('');
     const [reportData, setReportData] = useState([]);
     const [totalBudgeted, setTotalBudgeted] = useState(0);
     const [totalRealized, setTotalRealized] = useState(0);
 
     const fetchReportData = () => {
-        if (selectedMonth && selectedYear) {
-            axios.get(`http://localhost:3002/apiF/financesByMonth`, {
+        if (selectedQuarter && selectedYear) {
+            axios.get(`http://localhost:3002/apiF/financesByQuarter`, {
                 params: {
-                    month: selectedMonth,
+                    quarter: selectedQuarter,
                     year: selectedYear
                 }
             })
@@ -30,11 +30,7 @@ const MonthlyReport = () => {
         }
     };
 
-    const formatCurrency = (amount) => {
-        return `R$ ${parseFloat(amount).toFixed(2).replace('.', ',')}`;
-      };
-
-      const formatDate = (dateString) => {
+    const formatDate = (dateString) => {
         const date = new Date(dateString);
         const day = String(date.getDate() + 1).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -42,35 +38,31 @@ const MonthlyReport = () => {
         return `${day}/${month}/${year}`;
       };
 
+    const formatCurrency = (amount) => {
+        return `R$ ${parseFloat(amount).toFixed(2).replace('.', ',')}`;
+    };
+
     return (
         <>
-            <div className="MonthlyReportPage">
+            <div className="QuarterlyReportPage">
             <div className='reportHeader'>
                 <Link to='/dashboard'>
                     <button id='backBtn'>Voltar ao Dashboard</button>
                 </Link>
             </div>
                 <div className="report-container">
-                    <h2>Relatório Mensal</h2>
+                    <h2>Relatório Trimestral</h2>
                     <div className="report-controls">
-                        <label>Mês:</label>
+                        <label>Trimestre:</label>
                         <select
-                            value={selectedMonth}
-                            onChange={(e) => setSelectedMonth(e.target.value)}
+                            value={selectedQuarter}
+                            onChange={(e) => setSelectedQuarter(e.target.value)}
                         >
-                            <option value="">Selecione o mês</option>
-                            <option value="1">Janeiro</option>
-                            <option value="2">Fevereiro</option>
-                            <option value="3">Março</option>
-                            <option value="4">Abril</option>
-                            <option value="5">Maio</option>
-                            <option value="6">Junho</option>
-                            <option value="7">Julho</option>
-                            <option value="8">Agosto</option>
-                            <option value="9">Setembro</option>
-                            <option value="10">Outubro</option>
-                            <option value="11">Novembro</option>
-                            <option value="12">Dezembro</option>
+                            <option value="">Selecione o trimestre</option>
+                            <option value="1">1º Trimestre (Jan - Mar)</option>
+                            <option value="2">2º Trimestre (Abr - Jun)</option>
+                            <option value="3">3º Trimestre (Jul - Set)</option>
+                            <option value="4">4º Trimestre (Out - Dez)</option>
                         </select>
                         <label htmlFor="year-select">Ano:</label>
                         <select id="year-select" value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
@@ -114,4 +106,4 @@ const MonthlyReport = () => {
     );
 };
 
-export default MonthlyReport;
+export default QuarterlyReport;
