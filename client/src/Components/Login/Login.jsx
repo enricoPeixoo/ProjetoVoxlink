@@ -68,13 +68,6 @@ const Login = () => {
                         <h2 className='title'>Programa de Gerenciamento Financeiro - Voxlink</h2>
                         <p>Sua parceira em soluções de TI!</p>
                     </div>
-
-                    <div className="footerDiv flex">
-                        <span className="text">Não possui uma conta?</span>
-                        <Link to={'/register'}>
-                        <button className='btn'>Cadastre-se</button>
-                        </Link>
-                    </div>
                 </div>
 
                 <div className="formDiv flex">

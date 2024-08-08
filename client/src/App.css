@@ -362,7 +362,7 @@ img {
     height: 35px;
   }
 }
-.dashboardHeader #logoutBtn {
+.dashboardHeader #logoutBtn, .dashboardHeader #btn-register {
   padding: 5px;
   background-color: var(--primaryColor);
   color: #fff;

@@ -87,6 +87,10 @@ const Dashboard = () => {
           <Link to='/'>
             <button id='logoutBtn'>Log Out</button>
           </Link>
+            <Link to={'/register'}>
+              <button id='btn-register'>Cadastrar Usuário</button>
+            </Link>
+          
         </div>
         <div className="dashboardPage">
           <h1>Sistema Financeiro</h1>
