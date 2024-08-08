@@ -75,9 +75,9 @@ const Register = () => {
                     </div>
 
                     <div className="footerDiv flex">
-                        <span className="text">Já possui uma conta?</span>
-                        <Link to={'/'}>
-                        <button className='btn'>Login</button>
+                        <span className="text">Voltar ao Dashboard!</span>
+                        <Link to={'/dashboard'}>
+                        <button className='btn'>Dashboard</button>
                         </Link>
                     </div>
                 </div>
@@ -134,7 +134,7 @@ const Register = () => {
                             </div>
                         </div>
 
-                        <button type='submit' className='btn flex'>
+                        <button type='submit' className='btn flex' id='btn-submit'>
                             <span>Cadastrar</span>
                             <AiOutlineSwapRight className='icon' />
                         </button>

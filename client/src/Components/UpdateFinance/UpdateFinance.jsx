@@ -26,8 +26,8 @@ const UpdateFinance = () => {
                 setDate(formattedDate)
                 setName(response.data.name)
                 setType(response.data.type)
-                setBudgeted(response.data.budgeted)
-                setRealized(response.data.realized)
+                setBudgeted((response.data.budgeted / 100).toFixed(2))
+                setRealized(response.data.realized ? (response.data.realized / 100).toFixed(2) : '')
 
             } catch (err) {
                 console.log(err)
@@ -39,6 +39,7 @@ const UpdateFinance = () => {
     const handleUpdate = (e) => {
         e.preventDefault()
 
+
         axios.put('http://localhost:3002/apiF//updateFinance/' + id, {date, name, type, budgeted, realized})
         .then(res => {
             console.log(res)
@@ -46,6 +47,7 @@ const UpdateFinance = () => {
         })
         .catch(err => console.log(err))
     }
+
 
     return (
         <>
@@ -72,11 +74,11 @@ const UpdateFinance = () => {
                             </div>
                             <div className='formInputsModal'>
                                 <label>Orçado (R$):</label>
-                                <input type="number" id="budgeted" placeholder='Insira o valor orçado' required value={budgeted} onChange={(e) => setBudgeted(e.target.value)}/>
+                                <input type="number" id="budgeted" placeholder='Insira o valor orçado' required value={budgeted} step="0.01" onChange={(e) => setBudgeted(e.target.value)}/>
                             </div>
                             <div className='formInputsModal'>
                                 <label>Realizado (R$):</label>
-                                <input type="number" id="realized" placeholder='Insira o valor final' required value={realized} onChange={(e) => setRealized(e.target.value)}/>
+                                <input type="number" id="realized" placeholder='Insira o valor final' value={realized} step="0.01" onChange={(e) => setRealized(e.target.value)}/>
                             </div>
                             <button type="submit">Editar</button>
                         </form>

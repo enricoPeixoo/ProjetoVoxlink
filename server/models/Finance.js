@@ -20,7 +20,6 @@ const Finance = mongoose.model('Finance', {
     },
     realized: {
         type: Number,
-        required: true
     }
 })
 

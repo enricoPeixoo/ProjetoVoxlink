@@ -404,19 +404,70 @@ img{
     }
 }
 
-.dashboardHeader {
-    #logoutBtn {
-        padding: 5px;
-        background-color: var(--primaryColor);
-        color: #fff;
-        border: none;
-        border-radius: 2px;
-        cursor: pointer;
+@media screen and (max-height: 700px) {
+    .loginPage, .registerPage {
+        .container {
+            .imgDiv {
+                .textDiv {
+                    .title{
+                        font-size: 18px;
+                    }
+
+                    p {
+                        padding: 0.8rem;
+                    }
+                }
+
+                .footerDiv {
+                    .text {
+                        font-size: 10px;
+                    }
+
+                    .btn {
+                        padding: 0.3rem 1rem;
+                    }
+                }
+            }
+
+            .formDiv {
+                gap: 0.2rem;
+                
+
+                .headerDiv {
+                    padding: 0.5rem 0;
+
+                    #imgLogo {
+                        width: 100px;
+                    }
+
+                    h3 {
+                        font-size: 18px;
+                    }
+                }
+
+                .form {
+                    gap: 0.1rem;
+
+                    .inputDiv {
+                        input {
+                            width: 100%;
+                            max-width: 180px;
+                            
+                        }
+                    }
+
+                #btn-submit {
+                    height: 35px;
+                }
+                }
+            }
+        }
     }
 }
 
+
 .dashboardHeader {
-    #logoutBtn {
+    #logoutBtn, #btn-register {
         padding: 5px;
         background-color: var(--primaryColor);
         color: #fff;
@@ -427,7 +478,7 @@ img{
 }
 
 .dashboardPage {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;
@@ -464,6 +515,7 @@ button:hover {
 
 #btn-delete {
     background-color: rgb(189, 72, 4);
+    width: auto;
 }
 
 #btn-delete:hover {
@@ -482,12 +534,14 @@ table, th, td {
 
 th, td {
     padding: 10px;
-    text-align: left;
+    text-align: center;
+    white-space: nowrap;
 }
 
 #td-actions {
     display: flex;
     flex-direction: row;
+    justify-content: center;
     gap: 5px;
 }
 
@@ -661,6 +715,77 @@ th, td {
     
       }
 }
+
+.MonthlyReportPage, .QuarterlyReportPage, .SemesterReportPage, .AnnualReportPage {
+    .report-container {
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .report-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    
+    .report-controls label {
+        font-weight: bold;
+    }
+    
+    .report-controls select,
+    .report-controls input {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    
+    .report-controls button {
+        padding: 10px 20px;
+        background-color: var(--primaryColor);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    .report-controls button:hover {
+        background-color: var(--hoverColor);
+    }
+    
+    .report-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .report-table th,
+    .report-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    
+    .report-table th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+    
+    .report-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    
+    .total-row {
+        font-weight: bold;
+        background-color: #e0e0e0;
+    }
+     
+}
+
+
 
 
 

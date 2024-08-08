@@ -326,16 +326,43 @@ img {
     width: 85%;
   }
 }
-.dashboardHeader #logoutBtn {
-  padding: 5px;
-  background-color: var(--primaryColor);
-  color: #fff;
-  border: none;
-  border-radius: 2px;
-  cursor: pointer;
+@media screen and (max-height: 700px) {
+  .loginPage .container .imgDiv .textDiv .title, .registerPage .container .imgDiv .textDiv .title {
+    font-size: 18px;
+  }
+  .loginPage .container .imgDiv .textDiv p, .registerPage .container .imgDiv .textDiv p {
+    padding: 0.8rem;
+  }
+  .loginPage .container .imgDiv .footerDiv .text, .registerPage .container .imgDiv .footerDiv .text {
+    font-size: 10px;
+  }
+  .loginPage .container .imgDiv .footerDiv .btn, .registerPage .container .imgDiv .footerDiv .btn {
+    padding: 0.3rem 1rem;
+  }
+  .loginPage .container .formDiv, .registerPage .container .formDiv {
+    gap: 0.2rem;
+  }
+  .loginPage .container .formDiv .headerDiv, .registerPage .container .formDiv .headerDiv {
+    padding: 0.5rem 0;
+  }
+  .loginPage .container .formDiv .headerDiv #imgLogo, .registerPage .container .formDiv .headerDiv #imgLogo {
+    width: 100px;
+  }
+  .loginPage .container .formDiv .headerDiv h3, .registerPage .container .formDiv .headerDiv h3 {
+    font-size: 18px;
+  }
+  .loginPage .container .formDiv .form, .registerPage .container .formDiv .form {
+    gap: 0.1rem;
+  }
+  .loginPage .container .formDiv .form .inputDiv input, .registerPage .container .formDiv .form .inputDiv input {
+    width: 100%;
+    max-width: 180px;
+  }
+  .loginPage .container .formDiv .form #btn-submit, .registerPage .container .formDiv .form #btn-submit {
+    height: 35px;
+  }
 }
-
-.dashboardHeader #logoutBtn {
+.dashboardHeader #logoutBtn, .dashboardHeader #btn-register {
   padding: 5px;
   background-color: var(--primaryColor);
   color: #fff;
@@ -345,7 +372,7 @@ img {
 }
 
 .dashboardPage {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 20px auto;
   padding: 20px;
   background-color: #fff;
@@ -375,6 +402,7 @@ img {
 }
 .dashboardPage #btn-delete {
   background-color: rgb(189, 72, 4);
+  width: auto;
 }
 .dashboardPage #btn-delete:hover {
   background-color: rgb(238, 126, 61);
@@ -389,11 +417,13 @@ img {
 }
 .dashboardPage th, .dashboardPage td {
   padding: 10px;
-  text-align: left;
+  text-align: center;
+  white-space: nowrap;
 }
 .dashboardPage #td-actions {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   gap: 5px;
 }
 .dashboardPage #summary {
@@ -538,4 +568,66 @@ img {
 }
 .createFinancePage .formInputsModal #input-date, .updateFinancePage .formInputsModal #input-date {
   width: 120px;
+}
+
+.MonthlyReportPage .report-container, .QuarterlyReportPage .report-container, .SemesterReportPage .report-container, .AnnualReportPage .report-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
+}
+.MonthlyReportPage .report-controls, .QuarterlyReportPage .report-controls, .SemesterReportPage .report-controls, .AnnualReportPage .report-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.MonthlyReportPage .report-controls label, .QuarterlyReportPage .report-controls label, .SemesterReportPage .report-controls label, .AnnualReportPage .report-controls label {
+  font-weight: bold;
+}
+.MonthlyReportPage .report-controls select,
+.MonthlyReportPage .report-controls input, .QuarterlyReportPage .report-controls select,
+.QuarterlyReportPage .report-controls input, .SemesterReportPage .report-controls select,
+.SemesterReportPage .report-controls input, .AnnualReportPage .report-controls select,
+.AnnualReportPage .report-controls input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+.MonthlyReportPage .report-controls button, .QuarterlyReportPage .report-controls button, .SemesterReportPage .report-controls button, .AnnualReportPage .report-controls button {
+  padding: 10px 20px;
+  background-color: var(--primaryColor);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.MonthlyReportPage .report-controls button:hover, .QuarterlyReportPage .report-controls button:hover, .SemesterReportPage .report-controls button:hover, .AnnualReportPage .report-controls button:hover {
+  background-color: var(--hoverColor);
+}
+.MonthlyReportPage .report-table, .QuarterlyReportPage .report-table, .SemesterReportPage .report-table, .AnnualReportPage .report-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.MonthlyReportPage .report-table th,
+.MonthlyReportPage .report-table td, .QuarterlyReportPage .report-table th,
+.QuarterlyReportPage .report-table td, .SemesterReportPage .report-table th,
+.SemesterReportPage .report-table td, .AnnualReportPage .report-table th,
+.AnnualReportPage .report-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+.MonthlyReportPage .report-table th, .QuarterlyReportPage .report-table th, .SemesterReportPage .report-table th, .AnnualReportPage .report-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+.MonthlyReportPage .report-table tr:nth-child(even), .QuarterlyReportPage .report-table tr:nth-child(even), .SemesterReportPage .report-table tr:nth-child(even), .AnnualReportPage .report-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+.MonthlyReportPage .total-row, .QuarterlyReportPage .total-row, .SemesterReportPage .total-row, .AnnualReportPage .total-row {
+  font-weight: bold;
+  background-color: #e0e0e0;
 }/*# sourceMappingURL=App.css.map */
