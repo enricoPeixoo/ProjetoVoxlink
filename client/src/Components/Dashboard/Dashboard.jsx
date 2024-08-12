@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const Dashboard = () => {
     const [data, setData] = useState([]);
+    const [previousBalance, setPreviousBalance] = useState(null);
     const [entradasOrcadas, setEntradasOrcadas] = useState(0);
     const [entradasRealizadas, setEntradasRealizadas] = useState(0);
     const [saidasOrcadas, setSaidasOrcadas] = useState(0);
@@ -52,6 +53,11 @@ const Dashboard = () => {
       setCaixaCorrenteRealizado(caixaCorrenteRealizado);
     };
 
+    const [previousMonthBalance, setPreviousMonthBalance] = useState({
+      totalBudgeted: '0.00',
+      totalRealized: '0.00'
+    });
+
     useEffect(() => {
       axios.get('http://localhost:3002/apiF/finances')
         .then(res => {
@@ -66,6 +72,11 @@ const Dashboard = () => {
           calculateValues(res.data);  
         })
         .catch(err => console.log(err));
+
+        axios.get('http://localhost:3002/apiF/previousMonthBalance')
+            .then(res => setPreviousBalance(res.data))
+            .catch(err => console.log(err));
+        
     }, []);
 
     const handleDelete = (id) => {
@@ -80,6 +91,19 @@ const Dashboard = () => {
         .catch(err => console.log(err));
       }
     };
+
+    const handleCloseMonth = () => {
+      if (window.confirm('Você tem certeza que deseja encerrar o mês?')) {
+          axios.post('http://localhost:3002/apiF/closeMonth')
+              .then(res => {
+                  alert(res.data.message);
+                  setData([]);  // Limpa os dados do dashboard
+              })
+              .catch(err => {
+                  console.error(err);
+              });
+      }
+  };
 
     return (
       <>
@@ -98,6 +122,9 @@ const Dashboard = () => {
             <button>Adicionar nova ação</button>
           </Link>
           <h2>Registros</h2>
+          <button onClick={handleCloseMonth}>
+            Encerrar Mês
+                </button>        
           <table id="records-table">
             <thead>
               <tr>
@@ -133,33 +160,23 @@ const Dashboard = () => {
           </table>
           <br />
           <br />
-          <h2>Resumo Financeiro Total</h2>
-          <table id="summary-table">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Orçado</th>
-                <th>Realizado</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Entradas</td>
-                <td>{formatCurrency(entradasOrcadas)}</td>
-                <td>{formatCurrency(entradasRealizadas)}</td>
-              </tr>
-              <tr>
-                <td>Saídas</td>
-                <td>{formatCurrency(saidasOrcadas)}</td>
-                <td>{formatCurrency(saidasRealizadas)}</td>
-              </tr>
-              <tr>
-                <td>Caixa Corrente</td>
-                <td>{formatCurrency(caixaCorrenteOrcado)}</td>
-                <td>{formatCurrency(caixaCorrenteRealizado)}</td>
-              </tr>
-            </tbody>
-          </table>
+          <h2>Resumo Financeiro do Mês Anterior</h2>
+                <table id="summary-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Orçado</th>
+                            <th>Realizado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Caixa Anterior</td>
+                            <td>{formatCurrency(previousMonthBalance.totalBudgeted)}</td>
+                            <td>{formatCurrency(previousMonthBalance.totalRealized)}</td>
+                        </tr>
+                    </tbody>
+                </table>
           <br />
           <div className="btns-report">
           <Link to='/monthlyReport'>

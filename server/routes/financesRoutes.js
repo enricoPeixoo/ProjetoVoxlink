@@ -10,9 +10,11 @@ router.get('/financesByMonth', financeController.listFinancesByMonth)
 router.get('/financesByQuarter', financeController.listFinancesByQuarter)
 router.get('/financesBySemester', financeController.listFinancesBySemester)
 router.get('/financesByYear', financeController.listFinancesByYear)
+router.get('/previousMounthBalance', financeController.getPreviousMonthBalance)
 
 //Criar ação Financeira
 router.post('/createFinance', financeController.createFinance)
+router.post('/closeMonth', financeController.closeMonth)
 
 //Edição de ação financeira por id
 router.put('/updateFinance/:id', financeController.updateFinance)

@@ -1,4 +1,5 @@
 const Finance = require('../models/Finance')
+const ClosedMonth = require('../models/ClosedMonth')
 
 const toCents = (amount) => Math.round(amount * 100)
 
@@ -306,6 +307,70 @@ const listFinancesByYear = async (req, res) => {
     }
 };
 
+const closeMonth = async (req, res) => {
+    try {
+        const finances = await Finance.find({});
+        const closingData = {
+            month: new Date().getMonth() + 1,
+            year: new Date().getFullYear(),
+            finances
+        };
+
+        // Salva as finanças no banco como histórico do mês
+        const closedMonth = new ClosedMonth(closingData);
+        await closedMonth.save();
+
+        // Remove as finanças atuais do dashboard
+        await Finance.deleteMany({});
+
+        res.status(200).json({ message: 'Mês encerrado com sucesso!' });
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao encerrar o mês.' });
+    }
+};
+
+const getPreviousMonthBalance = async (req, res) => {
+    try {
+        const currentDate = new Date();
+        const previousMonth = currentDate.getMonth() === 0 ? 11 : currentDate.getMonth() - 1;
+        const previousYear = currentDate.getMonth() === 0 ? currentDate.getFullYear() - 1 : currentDate.getFullYear();
+
+        // Obter todas as finanças do mês anterior
+        const finances = await Finance.find({
+            date: {
+                $gte: new Date(previousYear, previousMonth, 1),
+                $lt: new Date(previousYear, previousMonth + 1, 1)
+            }
+        });
+
+        let totalBudgeted = 0;
+        let totalRealized = 0;
+
+        // Calcular o saldo baseado no tipo (entrada ou saída)
+        finances.forEach(finance => {
+            if (finance.type === 'entrada') {
+                totalBudgeted += finance.budgeted;
+                if (finance.realized !== undefined) {
+                    totalRealized += finance.realized;
+                }
+            } else if (finance.type === 'saida') {
+                totalBudgeted -= finance.budgeted;
+                if (finance.realized !== undefined) {
+                    totalRealized -= finance.realized;
+                }
+            }
+        });
+
+        res.json({
+            totalBudgeted: (totalBudgeted / 100).toFixed(2), // Converte de centavos para reais
+            totalRealized: (totalRealized / 100).toFixed(2)  // Converte de centavos para reais
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Erro ao obter o saldo do mês anterior');
+    }
+};
+
 module.exports = {
     createFinance,
     updateFinance,
@@ -315,5 +380,7 @@ module.exports = {
     listFinancesByMonth,
     listFinancesByQuarter,
     listFinancesBySemester,
-    listFinancesByYear
+    listFinancesByYear,
+    closeMonth,
+    getPreviousMonthBalance
 }
