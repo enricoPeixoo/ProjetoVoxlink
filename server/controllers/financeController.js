@@ -6,22 +6,20 @@ const toReais = (amount) => (amount / 100).toFixed(2)
 
 
 const listFinances = async (req, res) => {
-        try {
-            const finances = await Finance.find({});
-            const result = finances.map(finance => ({
-                ...finance.toObject(),
-                budgeted: toReais(finance.budgeted),
-                realized: finance.realized ? toReais(finance.realized) : undefined,
-            }));
-            res.send(result);
-        } catch (error) {
-            res.status(500).send(error);
-        }
+    try {
+        const finances = await Finance.find({}).sort({ date: 1 });
+        const result = finances.map(finance => ({
+            ...finance.toObject(),
+            date: finance.date.toISOString().split('T')[0], // Converte para 'YYYY-MM-DD'
+            budgeted: toReais(finance.budgeted),
+            realized: finance.realized ? toReais(finance.realized) : undefined,
+        }));
+        res.send(result);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
 
-    // Finance.find()
-    // .then(finances => res.json(finances))
-    // .catch (err => res.json(err))
-}
 
 const listFinanceById = async (req, res) => {
     const id = req.params.id

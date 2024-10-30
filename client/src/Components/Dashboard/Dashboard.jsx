@@ -14,12 +14,10 @@ const Dashboard = () => {
     const [caixaCorrenteRealizado, setCaixaCorrenteRealizado] = useState(0);
 
     const formatDate = (dateString) => {
-      const date = new Date(dateString);
-      const day = String(date.getDate() + 1).padStart(2, '0');
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const year = date.getFullYear();
-      return `${day}/${month}/${year}`;
+      const [year, month, day] = dateString.split('-'); // Divide a data ISO no formato 'YYYY-MM-DD'
+      return `${day}/${month}/${year}`; // Retorna no formato 'DD/MM/YYYY'
     };
+    
 
     const formatCurrency = (amount) => {
       return `R$ ${parseFloat(amount).toFixed(2).replace('.', ',')}`;
