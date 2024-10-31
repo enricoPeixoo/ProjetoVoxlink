@@ -4,6 +4,9 @@ import './AnnualReport.css';
 import '../../App.css';
 import { Link } from 'react-router-dom';
 
+import imgGreenArrow from '../../DashboardAssets/setaVerde.png'
+import imgRedArrow from '../../DashboardAssets/setaVermelha.png'
+
 const AnnualReport = () => {
     const [selectedYear, setSelectedYear] = useState('');
     const [reportData, setReportData] = useState([]);
@@ -29,12 +32,9 @@ const AnnualReport = () => {
     }
 
     const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const day = String(date.getDate() + 1).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const year = date.getFullYear();
-        return `${day}/${month}/${year}`;
-    };
+        const [year, month, day] = dateString.split('-'); // Divide a data ISO no formato 'YYYY-MM-DD'
+        return `${day}/${month}/${year}`; // Retorna no formato 'DD/MM/YYYY'
+      };
 
     const formatCurrency = (amount) => {
         return `R$ ${parseFloat(amount).toFixed(2).replace('.', ',')}`;
@@ -76,7 +76,13 @@ const AnnualReport = () => {
                             <tr key={index}>
                                 <td>{formatDate(item.date)}</td>
                                 <td>{item.name}</td>
-                                <td>{item.type}</td>
+                                <td>
+                                {item.type === 'entrada' ? (
+                                            <><img src={imgGreenArrow} alt="Entrada" className="icon-arrow" id='greenArrow'/></>
+                                        ) : (
+                                            <><img src={imgRedArrow} alt="Saída" className="icon-arrow" /></>
+                                        )}
+                                </td>
                                 <td>{formatCurrency(item.budgeted)}</td>
                                 <td>{item.realized !== undefined ? formatCurrency(item.realized) : '(Pendente)'}</td>
                             </tr>

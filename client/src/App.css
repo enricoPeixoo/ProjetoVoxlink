@@ -420,6 +420,15 @@ img {
   text-align: center;
   white-space: nowrap;
 }
+.dashboardPage .icon-arrow {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+.dashboardPage #greenArrow {
+  transform: rotate(180deg);
+}
 .dashboardPage #td-actions {
   display: flex;
   flex-direction: row;
@@ -630,4 +639,13 @@ img {
 .MonthlyReportPage .total-row, .QuarterlyReportPage .total-row, .SemesterReportPage .total-row, .AnnualReportPage .total-row {
   font-weight: bold;
   background-color: #e0e0e0;
+}
+.MonthlyReportPage .icon-arrow, .QuarterlyReportPage .icon-arrow, .SemesterReportPage .icon-arrow, .AnnualReportPage .icon-arrow {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+.MonthlyReportPage #greenArrow, .QuarterlyReportPage #greenArrow, .SemesterReportPage #greenArrow, .AnnualReportPage #greenArrow {
+  transform: rotate(180deg);
 }/*# sourceMappingURL=App.css.map */

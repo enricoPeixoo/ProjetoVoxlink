@@ -4,6 +4,9 @@ import './QuarterlyReport.css'
 import '../../App.css';
 import {Link} from 'react-router-dom';
 
+import imgGreenArrow from '../../DashboardAssets/setaVerde.png'
+import imgRedArrow from '../../DashboardAssets/setaVermelha.png'
+
 const QuarterlyReport = () => {
     const [selectedQuarter, setSelectedQuarter] = useState('');
     const [selectedYear, setSelectedYear] = useState('');
@@ -31,11 +34,8 @@ const QuarterlyReport = () => {
     };
 
     const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const day = String(date.getDate() + 1).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const year = date.getFullYear();
-        return `${day}/${month}/${year}`;
+        const [year, month, day] = dateString.split('-'); // Divide a data ISO no formato 'YYYY-MM-DD'
+        return `${day}/${month}/${year}`; // Retorna no formato 'DD/MM/YYYY'
       };
 
     const formatCurrency = (amount) => {
@@ -68,7 +68,8 @@ const QuarterlyReport = () => {
                         <select id="year-select" value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
                             <option value="">Selecione um ano</option>
                             <option value="2024">2024</option>
-                            {/* Adicione outras opções de ano conforme necessário */}
+                            <option value="2025">2025</option>
+                            {/* Adicionar outras opções de ano conforme necessário */}
                         </select>
                         <button onClick={fetchReportData}>Gerar Relatório</button>
                     </div>
@@ -88,7 +89,13 @@ const QuarterlyReport = () => {
                                 <tr key={index}>
                                     <td>{formatDate(item.date)}</td>
                                     <td>{item.name}</td>
-                                    <td>{item.type}</td>
+                                    <td>
+                                    {item.type === 'entrada' ? (
+                                            <><img src={imgGreenArrow} alt="Entrada" className="icon-arrow" id='greenArrow'/></>
+                                        ) : (
+                                            <><img src={imgRedArrow} alt="Saída" className="icon-arrow" /></>
+                                        )}
+                                    </td>
                                     <td>{formatCurrency(item.budgeted)}</td>
                                     <td>{item.realized !== undefined ? formatCurrency(item.realized) : '(Pendente)'}</td>
                                 </tr>

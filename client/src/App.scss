@@ -538,6 +538,17 @@ th, td {
     white-space: nowrap;
 }
 
+.icon-arrow {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+#greenArrow {
+    transform: rotate(180deg);
+}
+
 #td-actions {
     display: flex;
     flex-direction: row;
@@ -781,6 +792,17 @@ th, td {
     .total-row {
         font-weight: bold;
         background-color: #e0e0e0;
+    }
+
+    .icon-arrow {
+        width: 20px;
+        height: 20px;
+        vertical-align: middle;
+        margin-right: 5px;
+    }
+
+    #greenArrow {
+        transform: rotate(180deg);
     }
      
 }

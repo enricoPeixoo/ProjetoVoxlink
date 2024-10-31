@@ -124,7 +124,7 @@ const deleteFinance = async (req, res) => {
 const listFinancesByMonth = async (req, res) => {
     const { month, year } = req.query;
 
-    const startDate = new Date(year, month - 1, 1); // Month is zero-based
+    const startDate = new Date(year, month - 1, 0); // Month is zero-based
     const endDate = new Date(year, month, 0);
 
     try {
@@ -147,6 +147,7 @@ const listFinancesByMonth = async (req, res) => {
 
         const result = finances.map(finance => ({
             ...finance.toObject(),
+            date: finance.date.toISOString().split('T')[0], // Converte para 'YYYY-MM-DD'
             budgeted: toReais(finance.budgeted),
             realized: finance.realized ? toReais(finance.realized) : undefined,
         }));
@@ -169,7 +170,7 @@ const listFinancesByQuarter = async (req, res) => {
     }
 
     const startMonth = (quarter - 1) * 3;
-    const startDate = new Date(year, startMonth, 1);
+    const startDate = new Date(year, startMonth, 0);
     const endDate = new Date(year, startMonth + 3, 1);
 
     try {
@@ -195,6 +196,7 @@ const listFinancesByQuarter = async (req, res) => {
 
         const result = finances.map(finance => ({
             ...finance.toObject(),
+            date: finance.date.toISOString().split('T')[0], // Converte para 'YYYY-MM-DD'
             budgeted: toReais(finance.budgeted),
             realized: finance.realized ? toReais(finance.realized) : undefined,
         }));
@@ -217,7 +219,7 @@ const listFinancesBySemester = async (req, res) => {
     }
 
     const startMonth = (semester - 1) * 6;
-    const startDate = new Date(year, startMonth, 1);
+    const startDate = new Date(year, startMonth, 0);
     const endDate = new Date(year, startMonth + 6, 1);
 
     try {
@@ -243,6 +245,7 @@ const listFinancesBySemester = async (req, res) => {
 
         const result = finances.map(finance => ({
             ...finance.toObject(),
+            date: finance.date.toISOString().split('T')[0], // Converte para 'YYYY-MM-DD'
             budgeted: toReais(finance.budgeted),
             realized: finance.realized ? toReais(finance.realized) : undefined,
         }));
@@ -264,7 +267,7 @@ const listFinancesByYear = async (req, res) => {
         return res.status(400).send('Year is required');
     }
 
-    const startDate = new Date(year, 0, 1);
+    const startDate = new Date(year, 0, 0);
     const endDate = new Date(year, 11, 31);
 
     try {
@@ -290,6 +293,7 @@ const listFinancesByYear = async (req, res) => {
 
         const result = finances.map(finance => ({
             ...finance.toObject(),
+            date: finance.date.toISOString().split('T')[0], // Converte para 'YYYY-MM-DD'
             budgeted: toReais(finance.budgeted),
             realized: finance.realized ? toReais(finance.realized) : undefined,
         }));

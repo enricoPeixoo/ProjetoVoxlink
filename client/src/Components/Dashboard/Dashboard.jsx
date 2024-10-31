@@ -4,6 +4,9 @@ import '../../App.css';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 
+import imgGreenArrow from '../../DashboardAssets/setaVerde.png'
+import imgRedArrow from '../../DashboardAssets/setaVermelha.png'
+
 const Dashboard = () => {
     const [data, setData] = useState([]);
     const [entradasOrcadas, setEntradasOrcadas] = useState(0);
@@ -114,7 +117,13 @@ const Dashboard = () => {
                     <tr key={index}>
                       <td>{finance.date}</td>
                       <td>{finance.name}</td>
-                      <td>{finance.type}</td>
+                      <td>
+                      {finance.type === 'entrada' ? (
+                                            <><img src={imgGreenArrow} alt="Entrada" className="icon-arrow" id='greenArrow'/> Entrada</>
+                                        ) : (
+                                            <><img src={imgRedArrow} alt="Saída" className="icon-arrow" /> Saída</>
+                                        )}
+                      </td>
                       <td>{finance.budgeted}</td>
                       <td>{finance.realized ? finance.realized : '(Pendente)'}</td>
                       <td id='td-actions'>
