@@ -79,8 +79,14 @@ const UpdateFinance = () => {
                             <div className='formInputsModal'>
                                 <label>Realizado (R$):</label>
                                 <input type="number" id="realized" placeholder='Insira o valor final' value={realized} step="0.01" onChange={(e) => setRealized(e.target.value)}/>
+                                <button 
+                                    type="button" 
+                                    onClick={() => setRealized(budgeted)} 
+                                    style={{ margin: "10px 0", padding: "5px 10px", cursor: "pointer" }}>
+                                    Copiar valor Orçado
+                                </button>
                             </div>
-                            <button type="submit">Editar</button>
+                            <button type="submit">Salvar</button>
                         </form>
                     </div>
                 </div>

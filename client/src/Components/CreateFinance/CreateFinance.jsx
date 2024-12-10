@@ -56,11 +56,17 @@ const CreateFinance = () => {
                 </div>
                 <div className='formInputsModal'>
                   <label>Orçado (R$):</label>
-                  <input type="number" id="budgeted" placeholder='Insira o valor orçado' step="0.01" required onChange={(e) => {setBudgeted(e.target.value)}}/>
+                  <input type="number" id="budgeted" placeholder='Insira o valor orçado' step="0.01" required value={budgeted || ''} onChange={(e) => {setBudgeted(e.target.value)}}/>
                 </div>
                 <div className='formInputsModal'>
                   <label>Realizado (R$):</label>
-                  <input type="number" id="realized" placeholder='Insira o valor final' step="0.01" onChange={(e) => {setRealized(e.target.value)}}/>
+                  <input type="number" id="realized" placeholder='Insira o valor final' step="0.01" value={realized || ''} onChange={(e) => {setRealized(e.target.value)}}/>
+                  <button 
+                    type="button" 
+                    onClick={() => setRealized(budgeted)} 
+                    style={{ margin: "10px 0", padding: "5px 10px", cursor: "pointer" }}>
+                    Copiar valor Orçado
+                  </button>
                 </div>
                 <button type="submit">Adicionar</button>
               </form>
