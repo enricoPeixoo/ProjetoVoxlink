@@ -125,12 +125,12 @@ const listFinancesByMonth = async (req, res) => {
     const { month, year } = req.query;
 
     const startDate = new Date(year, month - 1, 0); // Month is zero-based
-    const endDate = new Date(year, month, 0);
+    const endDate = new Date(year, month, 0, 23, 59, 59, 999);
 
     try {
         const finances = await Finance.find({
             date: { $gte: startDate, $lte: endDate }
-        });
+        }).sort({date: 1});
 
         let totalBudgeted = 0;
         let totalRealized = 0;
@@ -176,7 +176,7 @@ const listFinancesByQuarter = async (req, res) => {
     try {
         const finances = await Finance.find({
             date: { $gte: startDate, $lt: endDate }
-        });
+        }).sort({date: 1});
 
         let totalBudgeted = 0;
         let totalRealized = 0;
@@ -225,7 +225,7 @@ const listFinancesBySemester = async (req, res) => {
     try {
         const finances = await Finance.find({
             date: { $gte: startDate, $lt: endDate }
-        });
+        }).sort({date: 1});
 
         let totalBudgeted = 0;
         let totalRealized = 0;
@@ -273,7 +273,7 @@ const listFinancesByYear = async (req, res) => {
     try {
         const finances = await Finance.find({
             date: { $gte: startDate, $lt: endDate }
-        });
+        }).sort({date: 1});
 
         let totalBudgeted = 0;
         let totalRealized = 0;
